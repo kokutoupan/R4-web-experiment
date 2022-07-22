@@ -7,7 +7,7 @@ function init() {
     quad = document.getElementById("quadratic").innerHTML;
     //xhyouki =document.getElementById("solution-value").innerHTML;
     xhyouki ='<mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="5" style="font-size: 124.9%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo></math></mjx-assistive-mml></mjx-container>';
-    console.log(xhyouki);
+    //console.log(xhyouki);
 }
 
 
