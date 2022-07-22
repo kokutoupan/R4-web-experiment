@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="utf-8" />
-        <title>二次方程式の解</title>
+  <head>
+    <meta charset="utf-8" />
+    <title>二次方程式の解</title>
 
-        <!--数式をきれいに見せるよう-->
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!--数式をきれいに見せるよう-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
 
-        <script src="../scripts/experiment5.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <p>\(ax^2 + bx + c = 0\)</p>
+    <div>
+      \(a\):<input type="number" id="numa" value="0" oninput="update()" />
+      \(b\):<input type="number" id="numb" value="0" oninput="update()" />
+      \(c\):<input type="number" id="numc" value="0" oninput="update()" />
+    </div>
 
-    </head>
-    <body>
-        <p>\(ax^2 + bx + c = 0\)</p>
-        <div>
-            \(a\):<input type="number" id="numa" value="0" oninput="update()"/>
-            \(b\):<input type="number" id="numb" value="0" oninput="update()"/>
-            \(c\):<input type="number" id="numc" value="0" oninput="update()"/>
-        </div>
+    <p id="quadratic">\(x = {-b \pm \sqrt{b^2-4ac} \over 2a}\)</p>
 
-        <p>\(x = {-b \pm \sqrt{b^2-4ac} \over 2a}\)</p>
+    <p id="solution-type"></p>
+    <!--<p id="solution-value">\(x = \)</p>-->
+    <p id="solution-value"></p>
 
-        <p id="solution-type"></p>
-        <p id="solution-value"></p>
-    </body>
+    <script src="../scripts/experiment5.js" type="text/javascript"></script>
+  </body>
 </html>
