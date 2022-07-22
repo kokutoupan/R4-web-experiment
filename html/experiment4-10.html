@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+   <html lang="ja">
+   　<head>
+   　  <meta charset="utf-8">
+   　  <title>Javascriptの練習</title>
+
+   　</head>
+   　<body> 
+      <h1> Canvasの利用 </h1>
+      <div>
+        <canvas id="cv" width="400" height="400">
+      </div>
+      <script>
+         canvas = document.getElementById("cv");
+         ctx = canvas.getContext("2d");
+
+         ctx.beginPath();
+         ctx.moveTo(250, 10);
+         ctx.lineTo(50,50);
+         ctx.lineTo(150,250);
+         ctx.lineTo(20,350);
+
+         ctx.stroke();
+         ctx.stroke();
+      </script>
+   　</body>
+  </html>
