@@ -1,78 +1,125 @@
-const memorisuu=40;
+/**
+ * @type {CanvasRenderingContext2D}
+ */
 
-function draw(){
-    const canvas=document.getElementById('graph');
-    const ctx=canvas.getContext('2d')
+const memorisuu = 40;
+const basezoom = 16;
 
-    const func = document.getElementById('siki').value;
+let interval = 0;
 
-    //console.log(func);
+let offset_x = 0;
+let offset_y = 0;
 
-    console.log(Function(func));
+let width = 0;
+let height = 0;
+
+function draw() {
+    const canvas = document.getElementById('graph');
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, width, height);
+    init();
+
+    const siki = document.getElementById('siki').value;
+
+    const func = Function('x', 'return ' + siki);
+
+    const zoom = Number(document.getElementById('zoom').value)/4;
+    let bairitu = document.getElementById('bairitu');
+    bairitu.innerText= String(zoom*100)+'%';
+
+    //GraphMemory(canvas);
+
+    let totalzoom = zoom*basezoom;
+
+    ctx.strokeStyle='black';
+
+    ctx.beginPath();
+    ctx.moveTo(offset_x, -func(0)*totalzoom + offset_y);
+
+    let step= 1/totalzoom;
+
+ 
+    console.log(step,-func(step));
+    for (let x = step; x + offset_x <= width; x+=step) {
+        const y = -func(x);
+        //console.log(x,y);
+        ctx.lineTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
+        ctx.moveTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
+    }
+
+    ctx.moveTo(offset_x, -func(0)*totalzoom + offset_y);
+    for (let x = -step; x + offset_x >= 0; x-=step) {
+        const y = -func(x);
+
+        ctx.lineTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
+        ctx.moveTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
+    }
+
+    ctx.stroke();
 }
 
-function init(){
-    const canvas=document.getElementById('graph');
-    const ctx=canvas.getContext('2d');
+function init() {
+    const canvas = document.getElementById('graph');
+    //const ctx=canvas.getContext('2d');
 
     resize(canvas);
     GraphMemory(canvas);
-    const width =canvas.width;
-    const height =canvas.height;
-
 }
 
 function resize(canvas) {
-    const diswidth=canvas.clientWidth;
-    const disheight=canvas.clientHeight;
+    const diswidth = canvas.clientWidth;
+    const disheight = canvas.clientHeight;
 
-    if(canvas.width != diswidth||canvas.height!=disheight)
-    {
-        canvas.width=diswidth;
-        canvas.height=disheight;
+    if (canvas.width != diswidth || canvas.height != disheight) {
+        canvas.width = diswidth;
+        canvas.height = disheight;
     }
+
+    offset_x = diswidth / 2;
+    offset_y = disheight / 2;
+
+    width = diswidth;
+    height = disheight;
 }
 
 function GraphMemory(canvas) {
-    const ctx=canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
-    const width=canvas.width;
-    const height=canvas.height;
+    const WidInterval = width / memorisuu;
+    const HeiInterval = height / memorisuu;
 
-    const WidInterval=width/memorisuu;
-    const HeiInterval=height/memorisuu;
-    
-    let interval=0;
-    if(WidInterval>HeiInterval)
+    interval = 0;
+    if (WidInterval > HeiInterval)
         interval = HeiInterval;
     else
         interval = WidInterval;
 
-    const phaseX = width/2%interval;
-    const phaseH = height/2%interval;
+    const phaseX = offset_x % interval;
+    const phaseH = offset_y % interval;
 
     ctx.beginPath();
     ctx.strokeStyle = 'darkgray';
-    for(let i=phaseX;i < width ; i+=interval){
-        ctx.moveTo( i ,0);
-        ctx.lineTo( i ,height);
+    for (let i = phaseX; i < width; i += interval) {
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, height);
     }
 
-    for(let i=phaseH;i < height ; i+=interval){
-        ctx.moveTo( 0 ,i);
-        ctx.lineTo( width ,i);
+    for (let i = phaseH; i < height; i += interval) {
+        ctx.moveTo(0, i);
+        ctx.lineTo(width, i);
     }
     ctx.stroke();
 
     ctx.strokeStyle = "dimgray";
 
     ctx.beginPath();
-    ctx.moveTo(width/2,0);
-    ctx.lineTo(width/2,height);
+    ctx.moveTo(offset_x, 0);
+    ctx.lineTo(offset_x, height);
 
-    ctx.moveTo(0,height/2);
-    ctx.lineTo(width,height/2);
+    ctx.moveTo(0, offset_y);
+    ctx.lineTo(width, offset_y);
     ctx.stroke();
 }
 
-window.onload=init();
+window.onload = init();

@@ -9,7 +9,13 @@
     <body>
         <canvas id ="graph"></canvas>
         <div>
-            数式 y=<input id='siki' type='text' oninput="draw()">
+            数式 y=<input id="siki" type="text">
+            <input id="button" type="button" value="描画" onclick="draw()">
+        </div>
+
+        <div>
+            Zoom<input id="zoom" type="range" max="32" min="1" step="1" value="4">
+            <f id="bairitu">100%</f>
         </div>
 
         <script src="../scripts/experiment6.js" type="text/javascript"></script>
