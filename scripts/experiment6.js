@@ -14,7 +14,7 @@ function init(){
     const height =canvas.height;
     
     console.log(width);
-    ctx.storkeStyle = "silver";
+    //ctx.storkeStyle = "silver";
     
     ctx.beginPath();
     ctx.moveTo(width/2,0);
