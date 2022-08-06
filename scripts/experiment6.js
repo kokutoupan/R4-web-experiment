@@ -2,7 +2,7 @@
  * @type {CanvasRenderingContext2D}
  */
 
-const memorisuu = 40;
+const memorisuu = 30;
 const basezoom = 16;
 
 let interval = 0;
