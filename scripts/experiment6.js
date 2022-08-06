@@ -24,39 +24,43 @@ function draw() {
 
     const func = Function('x', 'return ' + siki);
 
+    const zoom=magnification();
+
+    let totalzoom = zoom*interval;
+
+    ctx.strokeStyle='black';
+    //ctx.strokeStyle='red';
+
+
+    ctx.beginPath();    
+    for (let i = -offset_x; i <= offset_x; i+=1) {
+        const x= i/totalzoom;
+        const y = -func(x)*totalzoom;
+        ctx.lineTo(i + offset_x, y + offset_y);
+        ctx.moveTo(i + offset_x, y + offset_y);
+    }
+    ctx.stroke();
+
+    // ctx.beginPath();
+    // ctx.moveTo(offset_x, -func(0)*totalzoom + offset_y);
+
+    // for (let i = -1; i + offset_x >= 0; i-=step) {
+    //     const x= i/totalzoom;
+    //     const y = -func(x) * totalzoom;
+    //     ctx.lineTo(i + offset_x, y + offset_y);
+    //     ctx.moveTo(i + offset_x, y + offset_y);
+    // }
+    
+    ctx.stroke();
+}
+
+function magnification()
+{
     const zoom = Number(document.getElementById('zoom').value)/4;
     let bairitu = document.getElementById('bairitu');
     bairitu.innerText= String(zoom*100)+'%';
 
-    //GraphMemory(canvas);
-
-    let totalzoom = zoom*basezoom;
-
-    ctx.strokeStyle='black';
-
-    ctx.beginPath();
-    ctx.moveTo(offset_x, -func(0)*totalzoom + offset_y);
-
-    let step= 1/totalzoom;
-
- 
-    console.log(step,-func(step));
-    for (let x = step; x + offset_x <= width; x+=step) {
-        const y = -func(x);
-        //console.log(x,y);
-        ctx.lineTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
-        ctx.moveTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
-    }
-
-    ctx.moveTo(offset_x, -func(0)*totalzoom + offset_y);
-    for (let x = -step; x + offset_x >= 0; x-=step) {
-        const y = -func(x);
-
-        ctx.lineTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
-        ctx.moveTo(x*totalzoom + offset_x, y*totalzoom + offset_y);
-    }
-
-    ctx.stroke();
+    return zoom;
 }
 
 function init() {
