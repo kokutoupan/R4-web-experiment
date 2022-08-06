@@ -2,7 +2,7 @@
  * @type {CanvasRenderingContext2D}
  */
 
-const memorisuu = 30;
+const memorisuu = 20;
 const basezoom = 16;
 
 let interval = 0;
@@ -22,7 +22,7 @@ function draw() {
 
     const siki = document.getElementById('siki').value;
 
-    const func = Function('x', 'return ' + siki);
+    const func = new Function('x', 'return ' + siki);
 
     const zoom=magnification();
 
