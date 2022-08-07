@@ -41,17 +41,6 @@ function draw() {
     }
     ctx.stroke();
 
-    // ctx.beginPath();
-    // ctx.moveTo(offset_x, -func(0)*totalzoom + offset_y);
-
-    // for (let i = -1; i + offset_x >= 0; i-=step) {
-    //     const x= i/totalzoom;
-    //     const y = -func(x) * totalzoom;
-    //     ctx.lineTo(i + offset_x, y + offset_y);
-    //     ctx.moveTo(i + offset_x, y + offset_y);
-    // }
-    
-    ctx.stroke();
 }
 
 function magnification()
