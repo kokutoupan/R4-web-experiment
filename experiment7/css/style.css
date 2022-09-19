@@ -1,0 +1,13 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#canvas {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin-left: -800px; /* canvas の width/2 */
+  margin-top: -450px; /* canvas の height/2 */
+}
