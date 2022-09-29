@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.innerWidth / canvas.width,
             window.innerHeight / canvas.height
         );
+
         var transform = "scale(" + scale + "," + scale + ");";
 
         canvas.setAttribute(
