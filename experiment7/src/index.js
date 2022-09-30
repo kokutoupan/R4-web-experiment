@@ -1,10 +1,15 @@
 const PATH = './src/';
 
-let canvas = document.createElement('canvas');
+//const canvas = document.getElementById('canvas');
+
+const canvas = document.createElement('canvas');
 canvas.id = 'canvas';
 canvas.width = 1920;
-canvas.height =1080;
+canvas.height = 1080;
+canvas.style.marginTop = -540;
+canvas.style.marginLeft = -960;
 document.body.appendChild(canvas);
+grateScreen();
 const gl = canvas.getContext('webgl2');
 
 const mat4 = glMatrix.mat4;
@@ -322,6 +327,19 @@ loadShaders().then((shaderSources) => {
             XZsurfacePosition.add(new MyVec2(deltaTime, 0));
         }
 
+        if (XZsurfacePosition.x < -1000) {
+            XZsurfacePosition.x = -1000;
+        }
+        else if (XZsurfacePosition.x > 1000) {
+            XZsurfacePosition.x = 1000;
+        }
+
+        if (XZsurfacePosition.y < -1000) {
+            XZsurfacePosition.y = -1000;
+        }
+        else if (XZsurfacePosition.y > 1000) {
+            XZsurfacePosition.y = 1000;
+        }
         //radian += 1.0 * Math.PI / 180 * deltaTime / 20;
 
         // モデル変換行列の変更
@@ -366,7 +384,7 @@ loadShaders().then((shaderSources) => {
 });
 
 
-(function () {
+function grateScreen() {
     var styles = canvas.getAttribute("style") || "";
     // var context = canvas.getContext("2d");
 
@@ -402,4 +420,4 @@ loadShaders().then((shaderSources) => {
 
     onResize(canvas);
     window.addEventListener("resize", () => onResize(canvas), false);
-})()
+}

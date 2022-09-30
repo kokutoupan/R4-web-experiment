@@ -1,18 +1,26 @@
+* {
+  outline: 2px red solid;
+}
+
 html,
 body {
   height: 100%;
+  width: 100%;
   margin: 0;
 }
 
 .info {
   position: absolute;
-  font-size: 15pt; 
+  width: 220px;
+  margin-left: 20px;
+  font-size: 15pt;
   top: 0px;
   z-index: 1;
+  background-color: grey;
 }
 
 #canvas {
-  position: relative;
+  position: fixed;
   left: 50%;
   top: 50%;
   margin-left: -960px;

@@ -103,10 +103,14 @@ class Othello {
 
         if (keyCode === 'Enter') {
             if (this.getStone(this.nowSquare) === 0) {
-                this.setStone(this.nowSquare, this.turn);
-                console.log(this.checkOverTurn(this.nowSquare, this.turn));
+                const OverTurnData = this.checkOverTurn(this.nowSquare, this.turn);
+                console.log(OverTurnData);
+                if (OverTurnData.num != 0) {
+                    this.setStone(this.nowSquare, this.turn);
+                    this.#changeStones(OverTurnData.lineStones, this.nowSquare, this.turn);
+                    this.#changeTurn();
+                }
 
-                this.#changeTurn();
             }
         }
 
@@ -182,6 +186,30 @@ class Othello {
         else {
             this.turn = 1;
         }
+
+        let total = 0;
+        for (let x = 0; x < this.lineNum; x++) {
+            for (let y = 0; y < this.lineNum; y++) {
+                if (this.getStone(new MyVec2(x, y)) === 0) {
+                    const OverTurnData = this.checkOverTurn(new MyVec2(x, y), this.turn);
+                    total += OverTurnData.num;
+                    if (total > 0) {
+                        console.log(total, OverTurnData);
+                        return;
+                    }
+                }
+            }
+        }
+        this.#changeTurn();
+    }
+
+    #changeStones(lineStones, startPos, mStone) {
+        lineStones.forEach((([direction, num]) => {
+            for (let i = 0; i < num; i++) {
+                let tmp = new MyVec2(startPos.x + direction.x * (i + 1), startPos.y + direction.y * (i + 1));
+                this.setStone(tmp, mStone);
+            }
+        }));
     }
 
     checkOverTurn(startPos, mStone) {
@@ -231,21 +259,14 @@ class Othello {
             // }
         });
 
-        lineStones.forEach((([direction,num])=>{
-            for (let i = 0; i < num; i++) {
-                let tmp = new MyVec2(startPos.x + direction.x * (i + 1), startPos.y + direction.y * (i + 1));
-                this.setStone(tmp, mStone);
-            }
-        }))
-
-        return total;
+        return { num: total, lineStones: lineStones };
     }
 
 
     createStone() {
         var vertex = new Array(), idx = new Array();
         const row = 254;
-        const column = 256;
+        const column = 254;
         const rad = 20.0;
         const heightRad = 5;
 
