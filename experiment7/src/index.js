@@ -2,22 +2,106 @@ const PATH = './src/';
 
 let canvas = document.createElement('canvas');
 canvas.id = 'canvas';
-canvas.width = 1600;
-canvas.height = 900;
+canvas.width = 1920;
+canvas.height =1080;
 document.body.appendChild(canvas);
 const gl = canvas.getContext('webgl2');
 
 const mat4 = glMatrix.mat4;
 
+const info = document.querySelector('.info');
+info.innerHTML = 'FPS:';
+
 const othello = new Othello();
 
-
 document.addEventListener('keydown', keyDown);
+document.addEventListener('keyup', keyUp);
+
+const OnKeys = {
+    left: false,
+    right: false,
+    up: false,
+    down: false,
+    ctrl: false,
+    shift: false,
+    keyK: false,
+    keyJ: false,
+    keyH: false,
+    keyL: false
+}
 
 function keyDown(event) {
-    //console.log(event);
+    console.log(event);
     othello.selectSquare(event.code);
+
+    if (event.code === 'ArrowLeft') {
+        OnKeys.left = true;
+    }
+    if (event.code === 'ArrowRight') {
+        OnKeys.right = true;
+    }
+    if (event.code === 'ArrowUp') {
+        OnKeys.up = true;
+    }
+    if (event.code === 'ArrowDown') {
+        OnKeys.down = true;
+    }
+    if (event.code === 'ControlLeft') {
+        OnKeys.ctrl = true;
+    }
+    if (event.code === 'ShiftLeft') {
+        OnKeys.shift = true;
+    }
+
+    if (event.code === 'KeyK') {
+        OnKeys.keyK = true;
+    }
+    if (event.code === 'KeyJ') {
+        OnKeys.keyJ = true;
+    }
+    if (event.code === 'KeyH') {
+        OnKeys.keyH = true;
+    }
+    if (event.code === 'KeyL') {
+        OnKeys.keyL = true;
+    }
+
 }
+
+function keyUp(event) {
+    if (event.code === 'ArrowLeft') {
+        OnKeys.left = false;
+    }
+    if (event.code === 'ArrowRight') {
+        OnKeys.right = false;
+    }
+    if (event.code === 'ArrowUp') {
+        OnKeys.up = false;
+    }
+    if (event.code === 'ArrowDown') {
+        OnKeys.down = false;
+    }
+    if (event.code === 'ControlLeft') {
+        OnKeys.ctrl = false;
+    }
+    if (event.code === 'ShiftLeft') {
+        OnKeys.shift = false;
+    }
+
+    if (event.code === 'KeyK') {
+        OnKeys.keyK = false;
+    }
+    if (event.code === 'KeyJ') {
+        OnKeys.keyJ = false;
+    }
+    if (event.code === 'KeyH') {
+        OnKeys.keyH = false;
+    }
+    if (event.code === 'KeyL') {
+        OnKeys.keyL = false;
+    }
+}
+
 
 function loadShaders() {
     const loadVertexShader = fetch(PATH + 'vertex_shader.glsl').then((res) => res.text());
@@ -112,7 +196,7 @@ loadShaders().then((shaderSources) => {
     const fovY = 60 * Math.PI / 180;
     const aspect = 1600 / 900;
     const near = 30;
-    const far = 800;
+    const far = 1600;
     const projection = mat4.create();
     mat4.perspective(projection, fovY, aspect, near, far);
 
@@ -176,18 +260,68 @@ loadShaders().then((shaderSources) => {
     //
 
     gl.clearColor(0, 1.0, 0.5, 1.0);
-    const radius = 350;
+    let radius = 350;
     let radian = 0;
+    let Xradian = Math.PI / 6;
+    let XZsurfacePosition = new MyVec2(0, 0);
 
     //let rotation = 0;
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
+
+
     let beforeTime = 0;
     function loop(timestamp) {
         const deltaTime = timestamp - beforeTime;
         beforeTime = timestamp;
+
         // 角度を少しずつ変化させます。
+        if (OnKeys.keyL) {
+            radian += 1.5 * Math.PI / 180 * deltaTime / 10;
+        }
+        if (OnKeys.keyH) {
+            radian -= 1.5 * Math.PI / 180 * deltaTime / 10;
+        }
+        if (OnKeys.keyK) {
+            Xradian += 1.5 * Math.PI / 180 * deltaTime / 10;
+        }
+        if (OnKeys.keyJ) {
+            Xradian -= 1.5 * Math.PI / 180 * deltaTime / 10;
+        }
+        if (Xradian > Math.PI / 2.0 - 0.01) {
+            Xradian = Math.PI / 2.0 - 0.01;
+        }
+        else if (Xradian < Math.PI / -2.0 + 0.01) {
+            Xradian = Math.PI / -2.0 + 0.01;
+        }
+
+        if (OnKeys.ctrl) {
+            radius += deltaTime;
+        }
+        if (OnKeys.shift) {
+            radius -= deltaTime;
+        }
+        if (radius < 100) {
+            radius = 100;
+        }
+        if (radius > 1400) {
+            radius = 1400;
+        }
+
+        if (OnKeys.up) {
+            XZsurfacePosition.add(new MyVec2(0, -deltaTime));
+        }
+        if (OnKeys.down) {
+            XZsurfacePosition.add(new MyVec2(0, deltaTime));
+        }
+        if (OnKeys.left) {
+            XZsurfacePosition.add(new MyVec2(-deltaTime, 0));
+        }
+        if (OnKeys.right) {
+            XZsurfacePosition.add(new MyVec2(deltaTime, 0));
+        }
+
         //radian += 1.0 * Math.PI / 180 * deltaTime / 20;
 
         // モデル変換行列の変更
@@ -198,9 +332,18 @@ loadShaders().then((shaderSources) => {
         // gl.uniformMatrix4fv(modelLocation, false, model);
 
         // ビュー変換行列を用意します。
-        const cameraPosition = [Math.sin(radian) * radius, 200, Math.cos(radian) * radius];
-        const lookAtPosition = [0, 0, 0];
-        const upDirection = [0.0, 1.0, 0.0];
+
+        info.innerHTML = ' FPS: ' + String(Math.round(1000 / deltaTime * 100) / 100) + '\n'
+            + ' Position:\n  (' + Math.round(XZsurfacePosition.x * 100) / 100 + ',' + Math.round(XZsurfacePosition.y * 100) / 100 + ')' + '\n'
+            + ' Rotate:\n' + '  X-Z:' + Math.round(radian % (Math.PI * 2) * 100) / 100 + ' X-Y:' + Math.round(Xradian * 100) / 100;
+
+        const cameraPosition = [
+            Math.sin(radian) * radius * Math.cos(Xradian) + XZsurfacePosition.x,
+            radius * Math.sin(Xradian),
+            Math.cos(radian) * radius * Math.cos(Xradian) + XZsurfacePosition.y
+        ];
+        const lookAtPosition = [XZsurfacePosition.x, 0, XZsurfacePosition.y];
+        const upDirection = [0, 1.0, 0];
         const view = mat4.create();
         mat4.lookAt(view, cameraPosition, lookAtPosition, upDirection);
         gl.uniformMatrix4fv(viewLocation, false, view);
@@ -221,9 +364,6 @@ loadShaders().then((shaderSources) => {
 
     window.requestAnimationFrame(loop);
 });
-
-
-
 
 
 (function () {

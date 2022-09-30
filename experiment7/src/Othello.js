@@ -244,17 +244,17 @@ class Othello {
 
     createStone() {
         var vertex = new Array(), idx = new Array();
-        const row = 128;
-        const column = 128;
+        const row = 254;
+        const column = 256;
         const rad = 20.0;
-        const heightRad = 4;
+        const heightRad = 5;
 
 
         for (let i = 0; i <= row; i++) {
             let r = Math.PI / row * i;
             let ry = Math.cos(r);
-            let rr = Math.sin(r);
-            //let rr = 1 - ((i - row / 2) / (row / 2)) ** 2
+            //let rr = Math.sin(r);
+            let rr = 1 - ((i - row / 2) / (row / 2)) ** 6;
             //console.log(rr);
             let color;
             if (i < row / 2) {
