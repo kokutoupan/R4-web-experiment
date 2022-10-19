@@ -192,12 +192,6 @@ class Othello {
       }
 
       if (data === 1) {
-        //console.log(index, '黒');
-        // console.log(lineNum);
-        //console.log(black);
-        //mat4.fromXRotation(black, Math.PI);
-
-        //  mat4.fromTranslation(modelMat, [distance * (index % lineNum), 0, distance * Math.floor(index / lineNum)])
         mat4.fromRotationTranslation(
           modelMat,
           [1, 0, 0, 0],
