@@ -411,12 +411,6 @@ loadShaders().then((shaderSources) => {
 
 function grateScreen() {
   var styles = canvas.getAttribute("style") || "";
-  // var context = canvas.getContext("2d");
-
-  // // canvasが見えるように、色を付けます
-  // context.fillStyle = "rgba(0,0,16, 0.66)";
-  // context.fillRect(0, 0, canvas.width, canvas.height);
-
   var onResize = (canvas) => {
     var scale = Math.min(
       window.innerWidth / canvas.width,
