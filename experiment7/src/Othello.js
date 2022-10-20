@@ -378,13 +378,4 @@ class Othello {
     let idxf = Uint16Array.from(idx);
     return { v: vf, i: idxf };
   }
-
-  createBuffer(type, typedDataArray) {
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(type, buffer);
-    gl.bufferData(type, typedDataArray, gl.STATIC_DRAW);
-    gl.bindBuffer(type, null); // バインド解除
-
-    return buffer;
-  }
 }

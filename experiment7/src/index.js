@@ -249,7 +249,8 @@ loadShaders().then((shaderSources) => {
   // loop用の変数たち
   //
 
-  gl.clearColor(0, 1.0, 0.5, 1.0);
+  //gl.clearColor(0, 1.0, 0.5, 1.0);
+  gl.clearColor(0.015,0.003,0.196,1.000)
   let radius = 350;
   let radian = 0;
   let Xradian = Math.PI / 6;
