@@ -341,6 +341,18 @@ loadShaders().then((shaderSources) => {
     if (OnKeys.right) {
       XZsurfacePosition.add(new MyVec2(deltaTime, 0));
     }
+    // if (OnKeys.up) {
+    //   XZsurfacePosition.add(new MyVec2(deltaTime*Math.sin(radian), -deltaTime*Math.cos(radian)));
+    // }
+    // if (OnKeys.down) {
+    //   XZsurfacePosition.add(new MyVec2(-deltaTime*Math.sin(radian), deltaTime*Math.cos(radian)));
+    // }
+    // if (OnKeys.left) {
+    //   XZsurfacePosition.add(new MyVec2(-deltaTime*Math.sin(radian+Math.PI/2), deltaTime*Math.cos(radian+Math.PI/2)));
+    // }
+    // if (OnKeys.right) {
+    //   XZsurfacePosition.add(new MyVec2(deltaTime*Math.sin(radian+Math.PI/2), -deltaTime*Math.cos(radian+Math.PI/2)));
+    // }
 
     if (XZsurfacePosition.x < -1000) {
       XZsurfacePosition.x = -1000;
